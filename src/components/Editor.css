@@ -1,0 +1,76 @@
+.editor-container h2, .editor-container h3 {
+  color: var(--color-dark);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group input, .form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ced4da;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  font-family: var(--font-primary);
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+}
+
+.form-section {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #dee2e6;
+}
+
+.form-group-box {
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: var(--border-radius);
+  margin-bottom: 15px;
+  background-color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+.form-group-box input, .form-group-box textarea { margin-bottom: 10px; }
+.form-group-box input:last-child, .form-group-box textarea:last-child { margin-bottom: 0; }
+
+
+/* Botões */
+.btn-add, .btn-delete, .btn-upload, .btn-delete-photo, .btn-export {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: var(--font-primary);
+  transition: all 0.2s ease-in-out;
+}
+.btn-add { background-color: var(--color-success); color: white; }
+.btn-add:hover { background-color: #157347; }
+
+.btn-delete { background-color: var(--color-danger); color: white; margin-top: 10px; padding: 10px; font-size: 14px; }
+.btn-delete:hover { background-color: #bb2d3b; }
+
+.btn-upload, .btn-export { background-color: var(--color-primary); color: white; display: inline-block; text-align: center; }
+.btn-upload:hover, .btn-export:hover { background-color: var(--color-primary-dark); }
+
+.btn-delete-photo { background-color: var(--color-secondary); color: white; display: inline-block; margin-left: 10px; }
+.btn-delete-photo:hover { background-color: #5a6268; }
+
+.input-file { display: none; }
+.export-section { margin-bottom: 20px; }
+
+.template-switcher { display: flex; gap: 10px; margin-bottom: 15px; }
+.template-switcher button { flex-grow: 1; padding: 10px; border: 1px solid #ccc; background-color: #fff; cursor: pointer; border-radius: var(--border-radius); transition: all 0.2s; }
+.template-switcher button.active { background-color: var(--color-primary); color: white; border-color: var(--color-primary); font-weight: 500; }
