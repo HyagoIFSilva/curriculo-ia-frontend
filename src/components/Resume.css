@@ -1,21 +1,15 @@
-/* --- ESTILOS GERAIS E NOVOS PARA SCROLLBAR --- */
 .resume-preview {
     width: 100%;
     max-width: 800px;
     height: 1120px;
-    /* Trocamos min-height por height para um container fixo */
     background-color: white;
     color: var(--color-dark);
     box-shadow: var(--shadow-md);
     font-family: var(--font-primary);
     font-weight: 300;
-    display: flex;
-    /* Mantemos flex para o layout interno */
     overflow: hidden;
-    /* O mais importante: esconde tudo que vazar */
 }
 
-/* Estilização da barra de rolagem para um visual mais limpo */
 *::-webkit-scrollbar {
     width: 8px;
 }
@@ -74,7 +68,10 @@
     margin: 0 0 8px 0;
 }
 
-/* --- TEMPLATE: Clássico Moderno (layout-classic-modern) --- */
+.layout-classic-modern {
+    display: flex;
+}
+
 .layout-classic-modern .resume-sidebar {
     width: 35%;
     background-color: var(--color-light);
@@ -86,7 +83,6 @@
     width: 65%;
     padding: 40px;
     overflow-y: auto;
-    /* Adiciona rolagem interna */
 }
 
 .layout-classic-modern .profile-photo {
@@ -102,7 +98,6 @@
 
 .layout-classic-modern .sidebar-section h2 {
     font-size: 1.1em;
-    border-bottom: 2px solid var(--color-primary);
 }
 
 .layout-classic-modern .sidebar-section p {
@@ -143,11 +138,14 @@
     color: var(--color-secondary);
 }
 
-/* --- TEMPLATE: Criativo Minimalista (layout-creative-minimalist) --- */
+
 .layout-creative-minimalist {
+    overflow-y: auto;
+}
+
+.layout-creative-minimalist .resume-content-wrapper {
     padding: 50px;
     text-align: center;
-    overflow-y: auto;
 }
 
 .layout-creative-minimalist .main-header {
@@ -183,6 +181,10 @@
     flex-wrap: wrap;
 }
 
+.layout-creative-minimalist .contact-info p {
+    margin: 0;
+}
+
 .layout-creative-minimalist .skills-container {
     display: flex;
     flex-wrap: wrap;
@@ -203,10 +205,12 @@
     text-align: left;
 }
 
-/* --- TEMPLATE: Moderno (layout-data-centric) --- */
 .layout-data-centric {
-    padding: 40px;
     overflow-y: auto;
+}
+
+.layout-data-centric .resume-content-wrapper {
+    padding: 40px;
 }
 
 .layout-data-centric .main-header {
@@ -228,10 +232,18 @@
     margin-top: 5px;
 }
 
+.layout-data-centric .contact-info p {
+    margin: 0;
+}
+
 .layout-data-centric .content-grid {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 40px;
+}
+
+.layout-data-centric .grid-item {
+    min-width: 0;
 }
 
 .layout-data-centric .resume-summary {
@@ -266,22 +278,38 @@
     border-radius: 20px;
 }
 
-
 @media print {
+    body {
+        background-color: white;
+    }
+
+    .resume-container {
+        padding: 0;
+        background-color: white;
+    }
+
     *::-webkit-scrollbar {
         display: none;
     }
-    .resume-preview,
-    .layout-classic-modern .resume-main-content,
-    .layout-classic-modern .resume-sidebar,
-    .layout-creative-minimalist,
-    .layout-data-centric {
+
+    .resume-preview {
         height: auto;
+        width: 100%;
+        max-width: 100%;
+        box-shadow: none;
         overflow: visible;
     }
 
+    .layout-classic-modern,
+    .layout-creative-minimalist,
+    .layout-data-centric {
+        overflow: visible;
+        height: auto;
+    }
 
-    .resume-preview {
-        box-shadow: none;
+    .layout-classic-modern .resume-sidebar,
+    .layout-classic-modern .resume-main-content {
+        overflow: visible;
+        height: auto;
     }
 }
