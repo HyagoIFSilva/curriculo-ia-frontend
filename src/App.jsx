@@ -9,16 +9,9 @@ const initialState = {
   resumo: 'Desenvolvedor apaixonado por criar soluções inovadoras e interfaces intuitivas, com sólida experiência em React e Node.js. Buscando novos desafios para aplicar e expandir minhas habilidades técnicas.',
   contato: { email: 'seu.email@exemplo.com', telefone: '(11) 98765-4321', linkedin: 'linkedin.com/in/seu-usuario' },
   habilidades: 'HTML, CSS, JavaScript, React, Node.js, SQL, Git, Scrum',
-  idiomas: [
-    { idioma: 'Português', nivel: 'Nativo' },
-    { idioma: 'Inglês', nivel: 'Avançado' }
-  ],
-  experiencias: [
-    { cargo: 'Desenvolvedor Front-end Sênior', empresa: 'Tech Solutions Inc.', periodo: 'Jan 2024 - Presente', descricao: 'Liderança no desenvolvimento do novo portal do cliente, resultando em um aumento de 20% na satisfação do usuário. Mentor de 3 desenvolvedores juniores.' }
-  ],
-  formacoes: [
-    { instituicao: 'Universidade Exemplo', curso: 'Análise e Desenvolvimento de Sistemas', periodo: 'Jan 2021 - Dez 2023' }
-  ]
+  idiomas: [{ idioma: 'Português', nivel: 'Nativo' }, { idioma: 'Inglês', nivel: 'Avançado' }],
+  experiencias: [{ cargo: 'Desenvolvedor Front-end Sênior', empresa: 'Tech Solutions Inc.', periodo: 'Jan 2024 - Presente', descricao: 'Liderança no desenvolvimento do novo portal do cliente, resultando em um aumento de 20% na satisfação do usuário. Mentor de 3 desenvolvedores juniores.' }],
+  formacoes: [{ instituicao: 'Universidade Exemplo', curso: 'Análise e Desenvolvimento de Sistemas', periodo: 'Jan 2021 - Dez 2023' }]
 };
 
 function App() {
@@ -27,6 +20,7 @@ function App() {
   const [corTema, setCorTema] = useState('#0d6efd');
   const [dados, setDados] = useState(initialState);
   const [isAiLoading, setIsAiLoading] = useState(false);
+  const [isCoverLetterLoading, setIsCoverLetterLoading] = useState(false);
 
   useEffect(() => { document.documentElement.style.setProperty('--color-primary', corTema); }, [corTema]);
 
@@ -102,6 +96,25 @@ function App() {
     }
   };
 
+  const handleGenerateCoverLetter = async (targetJob, targetCompany) => {
+    setIsCoverLetterLoading(true);
+    try {
+      const response = await fetch('http://localhost:3001/api/generate-cover-letter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ resumeData: dados, targetJob, targetCompany }),
+      });
+      if (!response.ok) { throw new Error('Falha na resposta da API'); }
+      const data = await response.json();
+      return data.coverLetter;
+    } catch (error) {
+      console.error("Erro ao gerar carta:", error);
+      alert("Não foi possível gerar a carta de apresentação.");
+    } finally {
+      setIsCoverLetterLoading(false);
+    }
+  };
+
   return (
     <div className="app-container">
       <Editor
@@ -115,6 +128,8 @@ function App() {
         onDeleteFoto={handleDeleteFoto}
         onAiImprove={handleAiImprove}
         isAiLoading={isAiLoading}
+        onGenerateCoverLetter={handleGenerateCoverLetter}
+        isCoverLetterLoading={isCoverLetterLoading}
       />
       <Resume ref={resumeRef} dados={{ ...dados, template }} />
     </div>
