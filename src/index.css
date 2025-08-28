@@ -1,23 +1,22 @@
-/* Definindo nossas variáveis de design para reusar em todo o projeto */
 :root {
   --font-primary: 'Poppins', sans-serif;
-  --color-primary: #0d6efd; /* Um azul mais vibrante */
+  --color-primary: #0d6efd;
   --color-primary-dark: #0a58ca;
-  --color-secondary: #6c757d; /* Cinza para detalhes */
+  --color-secondary: #6c757d;
   --color-success: #198754;
   --color-danger: #dc3545;
-  --color-light: #f8f9fa; /* Fundo do editor */
-  --color-dark: #212529; /* Cor do texto principal */
-  --color-background: #e9ecef; /* Fundo da área do preview */
+  --color-light: #f8f9fa;
+  --color-dark: #212529;
+  --color-background: #e9ecef;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
   --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
-  --border-radius: 6px;
+  --border-radius: 8px;
 }
 
 body {
   margin: 0;
   font-family: var(--font-primary);
-  background-color: #f4f4f4;
+  background-color: var(--color-light);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

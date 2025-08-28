@@ -1,43 +1,287 @@
-/* --- ESTILOS GERAIS --- */
-.resume-preview { width: 100%; max-width: 800px; min-height: 1120px; background-color: white; color: var(--color-dark); box-shadow: var(--shadow-md); font-family: var(--font-primary); font-weight: 300; }
-.resume-section h2 { font-size: 1.3em; font-weight: 600; color: var(--color-primary); border-bottom: 2px solid var(--color-primary); padding-bottom: 5px; margin-bottom: 15px; }
-.resume-section p { white-space: pre-wrap; line-height: 1.6; margin: 5px 0; }
-.experience-item, .education-item { margin-bottom: 20px; }
-.experience-item h3, .education-item h3 { margin: 0; font-size: 1.1em; font-weight: 500; color: var(--color-dark); }
-.experience-details, .education-details { margin: 2px 0 5px 0; font-style: italic; color: var(--color-secondary); font-size: 0.9em; }
+/* --- ESTILOS GERAIS E NOVOS PARA SCROLLBAR --- */
+.resume-preview {
+    width: 100%;
+    max-width: 800px;
+    height: 1120px;
+    /* Trocamos min-height por height para um container fixo */
+    background-color: white;
+    color: var(--color-dark);
+    box-shadow: var(--shadow-md);
+    font-family: var(--font-primary);
+    font-weight: 300;
+    display: flex;
+    /* Mantemos flex para o layout interno */
+    overflow: hidden;
+    /* O mais importante: esconde tudo que vazar */
+}
+
+/* Estilização da barra de rolagem para um visual mais limpo */
+*::-webkit-scrollbar {
+    width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
+
+.resume-section h2 {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: var(--color-primary);
+    border-bottom: 2px solid var(--color-primary);
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.resume-section p {
+    white-space: pre-wrap;
+    line-height: 1.6;
+    margin: 5px 0;
+}
+
+.experience-item,
+.education-item {
+    margin-bottom: 20px;
+}
+
+.experience-item h3,
+.education-item h3 {
+    margin: 0;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: var(--color-dark);
+}
+
+.experience-details,
+.education-details {
+    margin: 2px 0 5px 0;
+    font-style: italic;
+    color: var(--color-secondary);
+    font-size: 0.9em;
+}
+
+.languages-container .language-item p {
+    margin: 0 0 8px 0;
+}
 
 /* --- TEMPLATE: Clássico Moderno (layout-classic-modern) --- */
-.layout-classic-modern { display: flex; }
-.layout-classic-modern .resume-sidebar { width: 35%; background-color: var(--color-light); padding: 30px; }
-.layout-classic-modern .profile-photo { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin: 0 auto 20px; display: block; border: 6px solid white; box-shadow: var(--shadow-md); }
-.layout-classic-modern .sidebar-section h2 { font-size: 1.1em; }
-.layout-classic-modern .sidebar-section p { font-size: 0.9em; word-break: break-word; }
-.layout-classic-modern .skills-container-sidebar { display: flex; flex-wrap: wrap; gap: 8px; }
-.layout-classic-modern .skill-tag-sidebar { background-color: var(--color-primary); color: white; padding: 5px 10px; border-radius: var(--border-radius); font-size: 0.85em; font-weight: 400; }
-.layout-classic-modern .resume-main-content { width: 65%; padding: 40px; }
-.layout-classic-modern .main-header { text-align: left; margin-bottom: 30px; }
-.layout-classic-modern .main-header h1 { font-size: 2.8em; font-weight: 700; margin-bottom: 5px; }
-.layout-classic-modern .main-header p { font-size: 1em; font-style: italic; color: var(--color-secondary); }
+.layout-classic-modern .resume-sidebar {
+    width: 35%;
+    background-color: var(--color-light);
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.layout-classic-modern .resume-main-content {
+    width: 65%;
+    padding: 40px;
+    overflow-y: auto;
+    /* Adiciona rolagem interna */
+}
+
+.layout-classic-modern .profile-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 20px;
+    display: block;
+    border: 6px solid white;
+    box-shadow: var(--shadow-md);
+}
+
+.layout-classic-modern .sidebar-section h2 {
+    font-size: 1.1em;
+    border-bottom: 2px solid var(--color-primary);
+}
+
+.layout-classic-modern .sidebar-section p {
+    font-size: 0.9em;
+    word-break: break-word;
+}
+
+.layout-classic-modern .skills-container-sidebar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.layout-classic-modern .skill-tag-sidebar {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+    font-size: 0.85em;
+    font-weight: 400;
+    transition: background-color 0.3s ease;
+}
+
+.layout-classic-modern .main-header {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.layout-classic-modern .main-header h1 {
+    font-size: 2.8em;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.layout-classic-modern .main-header p {
+    font-size: 1em;
+    font-style: italic;
+    color: var(--color-secondary);
+}
 
 /* --- TEMPLATE: Criativo Minimalista (layout-creative-minimalist) --- */
-.layout-creative-minimalist { padding: 50px; text-align: center; }
-.layout-creative-minimalist .main-header { margin-bottom: 40px; }
-.layout-creative-minimalist .profile-photo { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; margin: 0 auto 20px; }
-.layout-creative-minimalist .main-header h1 { font-size: 3em; font-weight: 700; margin-bottom: 10px; }
-.layout-creative-minimalist .main-header p { font-size: 1.1em; max-width: 650px; margin: 0 auto 20px; }
-.layout-creative-minimalist .contact-info { display: flex; justify-content: center; gap: 20px; font-size: 0.9em; color: var(--color-secondary); flex-wrap: wrap; }
-.layout-creative-minimalist .skills-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-.layout-creative-minimalist .skill-tag { background-color: var(--color-light); color: var(--color-primary); padding: 8px 15px; border-radius: var(--border-radius); font-weight: 500; }
-.layout-creative-minimalist .resume-section { text-align: left; }
+.layout-creative-minimalist {
+    padding: 50px;
+    text-align: center;
+    overflow-y: auto;
+}
+
+.layout-creative-minimalist .main-header {
+    margin-bottom: 40px;
+}
+
+.layout-creative-minimalist .profile-photo {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 20px;
+}
+
+.layout-creative-minimalist .main-header h1 {
+    font-size: 3em;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.layout-creative-minimalist .main-header p {
+    font-size: 1.1em;
+    max-width: 650px;
+    margin: 0 auto 20px;
+}
+
+.layout-creative-minimalist .contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 0.9em;
+    color: var(--color-secondary);
+    flex-wrap: wrap;
+}
+
+.layout-creative-minimalist .skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.layout-creative-minimalist .skill-tag {
+    background-color: #e8edf3;
+    color: var(--color-primary);
+    padding: 8px 15px;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.layout-creative-minimalist .resume-section {
+    text-align: left;
+}
 
 /* --- TEMPLATE: Moderno (layout-data-centric) --- */
-.layout-data-centric { padding: 40px; }
-.layout-data-centric .main-header { padding-bottom: 15px; margin-bottom: 20px; }
-.layout-data-centric .main-header h1 { font-size: 3.2em; font-weight: 700; margin: 0; }
-.layout-data-centric .contact-info { display: flex; gap: 20px; margin-top: 5px; }
-.layout-data-centric .content-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; }
-.layout-data-centric .resume-summary { font-size: 1.1em; font-style: italic; color: var(--color-secondary); }
-.layout-data-centric .resume-skills { grid-column: 1 / 2; }
-.layout-data-centric .resume-main-col { grid-column: 2 / 3; grid-row: 1 / span 2; }
-.layout-data-centric .skills-container { display: flex; flex-wrap: wrap; gap: 10px; }
-.layout-data-centric .skill-tag { background-color: var(--color-light); border: 1px solid #ddd; padding: 8px 12px; border-radius: 20px; }
+.layout-data-centric {
+    padding: 40px;
+    overflow-y: auto;
+}
+
+.layout-data-centric .main-header {
+    border-bottom: 2px solid var(--color-primary);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease;
+}
+
+.layout-data-centric .main-header h1 {
+    font-size: 3.2em;
+    font-weight: 700;
+    margin: 0;
+}
+
+.layout-data-centric .contact-info {
+    display: flex;
+    gap: 20px;
+    margin-top: 5px;
+}
+
+.layout-data-centric .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+}
+
+.layout-data-centric .resume-summary {
+    font-size: 1.1em;
+    font-style: italic;
+    color: var(--color-secondary);
+}
+
+.layout-data-centric .resume-skills {
+    grid-column: 1 / 2;
+}
+
+.layout-data-centric .resume-languages {
+    grid-column: 1 / 2;
+}
+
+.layout-data-centric .resume-main-col {
+    grid-column: 2 / 3;
+    grid-row: 1 / span 3;
+}
+
+.layout-data-centric .skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.layout-data-centric .skill-tag {
+    background-color: var(--color-light);
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    border-radius: 20px;
+}
+
+
+@media print {
+    *::-webkit-scrollbar {
+        display: none;
+    }
+    .resume-preview,
+    .layout-classic-modern .resume-main-content,
+    .layout-classic-modern .resume-sidebar,
+    .layout-creative-minimalist,
+    .layout-data-centric {
+        height: auto;
+        overflow: visible;
+    }
+
+
+    .resume-preview {
+        box-shadow: none;
+    }
+}

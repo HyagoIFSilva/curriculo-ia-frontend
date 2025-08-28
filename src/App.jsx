@@ -7,12 +7,12 @@ const initialState = {
   foto: '',
   nome: 'Seu Nome Aqui',
   resumo: 'Desenvolvedor apaixonado por criar soluções inovadoras e interfaces intuitivas, com sólida experiência em React e Node.js. Buscando novos desafios para aplicar e expandir minhas habilidades técnicas.',
-  contato: {
-    email: 'seu.email@exemplo.com',
-    telefone: '(11) 98765-4321',
-    linkedin: 'linkedin.com/in/seu-usuario'
-  },
+  contato: { email: 'seu.email@exemplo.com', telefone: '(11) 98765-4321', linkedin: 'linkedin.com/in/seu-usuario' },
   habilidades: 'HTML, CSS, JavaScript, React, Node.js, SQL, Git, Scrum',
+  idiomas: [
+    { idioma: 'Português', nivel: 'Nativo' },
+    { idioma: 'Inglês', nivel: 'Avançado' }
+  ],
   experiencias: [
     { cargo: 'Desenvolvedor Front-end Sênior', empresa: 'Tech Solutions Inc.', periodo: 'Jan 2024 - Presente', descricao: 'Liderança no desenvolvimento do novo portal do cliente, resultando em um aumento de 20% na satisfação do usuário. Mentor de 3 desenvolvedores juniores.' }
   ],
@@ -24,43 +24,46 @@ const initialState = {
 function App() {
   const resumeRef = useRef();
   const [template, setTemplate] = useState('layout-classic-modern');
-  
-  // Todo o nosso estado de dados agora vive em um único objeto
+  const [corTema, setCorTema] = useState('#0d6efd');
   const [dados, setDados] = useState(initialState);
+  const [isAiLoading, setIsAiLoading] = useState(false);
 
-  // useEffect para CARREGAR os dados do localStorage quando o app iniciar
+  useEffect(() => { document.documentElement.style.setProperty('--color-primary', corTema); }, [corTema]);
+
   useEffect(() => {
     const dadosSalvos = localStorage.getItem('resumeData');
     if (dadosSalvos) {
-      setDados(JSON.parse(dadosSalvos));
+      const parsedData = JSON.parse(dadosSalvos);
+      setDados(parsedData);
+      if (parsedData.corTema) { setCorTema(parsedData.corTema); }
     }
-  }, []); // O array vazio [] significa que este efeito roda apenas UMA VEZ
+  }, []);
 
-  // useEffect para SALVAR os dados no localStorage sempre que eles mudarem
-  useEffect(() => {
-    localStorage.setItem('resumeData', JSON.stringify(dados));
-  }, [dados]); // Este efeito roda toda vez que o objeto 'dados' for alterado
+  useEffect(() => { localStorage.setItem('resumeData', JSON.stringify({ ...dados, corTema })); }, [dados, corTema]);
 
-  // Funções de manipulação agora atualizam o objeto 'dados'
   const handleDadosChange = (section, index, event) => {
     const { name, value } = event.target;
     const novosDados = { ...dados };
-
-    if (section === 'experiencias' || section === 'formacoes') {
+    if (section === 'experiencias' || section === 'formacoes' || section === 'idiomas') {
       novosDados[section][index][name] = value;
     } else if (section === 'contato') {
       novosDados[section][name] = value;
     } else {
-      novosDados[section] = value; // Para nome, resumo, habilidades
+      novosDados[section] = value;
     }
     setDados(novosDados);
   };
-  
+
   const handleAddItem = (section) => {
     const novosDados = { ...dados };
-    const newItem = section === 'experiencias' 
-      ? { cargo: '', empresa: '', periodo: '', descricao: '' }
-      : { instituicao: '', curso: '', periodo: '' };
+    let newItem;
+    if (section === 'experiencias') {
+      newItem = { cargo: '', empresa: '', periodo: '', descricao: '' };
+    } else if (section === 'formacoes') {
+      newItem = { instituicao: '', curso: '', periodo: '' };
+    } else if (section === 'idiomas') {
+      newItem = { idioma: '', nivel: 'Básico' };
+    }
     novosDados[section].push(newItem);
     setDados(novosDados);
   };
@@ -70,24 +73,48 @@ function App() {
     novosDados[section] = novosDados[section].filter((_, i) => i !== index);
     setDados(novosDados);
   };
-  
+
   const handleFotoChange = (event) => {
     const file = event.target.files[0];
     if (file) { const reader = new FileReader(); reader.onloadend = () => { setDados({ ...dados, foto: reader.result }); }; reader.readAsDataURL(file); }
   };
+
   const handleDeleteFoto = () => setDados({ ...dados, foto: '' });
+
+  const handleAiImprove = async (text, section, index = null) => {
+    setIsAiLoading(true);
+    try {
+      const response = await fetch('http://localhost:3001/api/improve-text', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }), });
+      if (!response.ok) { throw new Error('Falha na resposta da API'); }
+      const data = await response.json();
+      const novosDados = { ...dados };
+      if (section === 'resumo') {
+        novosDados.resumo = data.improvedText;
+      } else if (section === 'experiencias') {
+        novosDados.experiencias[index].descricao = data.improvedText;
+      }
+      setDados(novosDados);
+    } catch (error) {
+      console.error("Erro ao otimizar com IA:", error);
+      alert("Não foi possível otimizar o texto.");
+    } finally {
+      setIsAiLoading(false);
+    }
+  };
 
   return (
     <div className="app-container">
-      <Editor 
-        dados={dados} 
-        template={template}
-        setTemplate={setTemplate}
+      <Editor
+        dados={dados}
+        template={template} setTemplate={setTemplate}
+        corTema={corTema} setCorTema={setCorTema}
         onDadosChange={handleDadosChange}
         onAddItem={handleAddItem}
         onDeleteItem={handleDeleteItem}
         onFotoChange={handleFotoChange}
         onDeleteFoto={handleDeleteFoto}
+        onAiImprove={handleAiImprove}
+        isAiLoading={isAiLoading}
       />
       <Resume ref={resumeRef} dados={{ ...dados, template }} />
     </div>

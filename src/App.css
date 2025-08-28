@@ -21,3 +21,24 @@
   display: flex;
   justify-content: center;
 }
+
+/* --- REGRAS ESPECIAIS PARA IMPRESSÃO --- */
+@media print {
+  /* Esconde completamente a coluna do editor */
+  .editor-container {
+    display: none;
+  }
+
+  /* Faz a coluna do currículo ocupar toda a largura da página */
+  .resume-container {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: white; /* Garante que não haja fundo cinza no PDF */
+  }
+
+  /* Remove a altura fixa do container principal na impressão */
+  .app-container {
+    height: auto;
+  }
+}
